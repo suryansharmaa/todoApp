@@ -17,6 +17,8 @@ import com.example.todoApp.exception.ResourceNotFoundException;
 import com.example.todoApp.model.Todo;
 import com.example.todoApp.repository.TodoRepository;
 
+import jakarta.validation.Valid;
+
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/v1/todos")
@@ -31,7 +33,7 @@ public class TodoController {
     }
 
     @PostMapping
-    public Todo createTodo(@RequestBody Todo todo) {
+    public Todo createTodo(@Valid @RequestBody Todo todo) {
         return todoRepository.save(todo);
     }
 
@@ -47,7 +49,7 @@ public class TodoController {
     }
 
     @PutMapping("/{id}")
-    public Todo updateTodo(@PathVariable Long id, @RequestBody Todo todoDetails) {
+    public Todo updateTodo(@PathVariable Long id, @Valid @RequestBody Todo todoDetails) {
         Todo todo = todoRepository.findById(id).orElse(null);
 
         if (todo != null) {
